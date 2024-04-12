@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 import cv2
+import numpy as np
 
-from utils import dataLoader, modelTrainer
+from utils import dataLoader, modelTrainer, dataTransformer
 from utils.makeLabels import make_labels
 import utils.imageHandler as imageHandler
 from utils.listFiles import list_files
@@ -27,12 +28,25 @@ def main():
     print("image loading is done!")
     imageHandler.show_example(train_data, train_labels)
 
-    # TODO: hdft ??
 
+    print("\ntransform data...")
+    train_data = dataTransformer.transform(train_data)
+    test_data = dataTransformer.transform(test_data)
+    print("transforming data is done!")
 
-    # TODO: train CNN with keras
+    # TODO: hyperparameter loop + graphs
+
     print("\ntrain CNN model...")
-    modelTrainer.create_cnn_model(train_data, train_labels)
+    model = modelTrainer.create_cnn_model()
+    modelTrainer.train(model, train_data, train_labels, test_data, test_labels)
+    print("model training is done!")
+
+    # save model
+    # model.save_weights('cnn.h5')
+
+    print("\ncheck predictions...")
+    modelTrainer.checkPredicitons(model, test_data, test_labels)
+    print("prediction checking is done!")
 
     cv2.waitKey(0)
     cv2.destroyAllWindows()

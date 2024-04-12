@@ -7,6 +7,8 @@ import matplotlib.pyplot as plt
 from cv2 import Mat
 from numpy import ndarray, dtype, generic
 
+from utils import exampleHelper
+
 
 # images from: https://www.kaggle.com/datasets/chazzer/smiling-or-not-face-data/data
 
@@ -36,14 +38,7 @@ def read_process_image(path: str, gray_scale: bool) -> Mat | ndarray | ndarray[A
 
 # does NOT handle image numbers not divisible by images_col_count
 def show_example(data, labels, example_size=100, images_col_count=10, border_size=10) -> None:
-    example_images = []
-    example_labels = []
-    example_indexes = random.sample(range(len(data)), example_size)
-
-    for index in example_indexes:
-        example_images.append(data[index])
-        if labels is not None:
-            example_labels.append(labels[index])
+    example_images, example_labels, _ = exampleHelper.get_random_examples(data, labels, example_size)
 
     row_count = math.ceil(len(example_images) / images_col_count)
 
@@ -78,3 +73,27 @@ def show_example(data, labels, example_size=100, images_col_count=10, border_siz
     plt.figure(figsize=(10, 10))
 
     cv2.imshow('example', result)
+
+
+def show_with_prediction(image, percentage, prediction, real):
+    # TODO: show image with text
+    font = cv2.FONT_HERSHEY_COMPLEX
+    bottom_left_corner_of_text = (32, 32)
+    font_scale = 1
+    font_color = (0, 0, 0)
+    thickness = 1
+    line_type = 1
+
+    text = ('%: ' + str(percentage[0]) + ', ' + str(percentage[1])
+            + " pred: " + str(prediction) + " real: " + str(real)
+            )
+
+    cv2.putText(image, text,
+                bottom_left_corner_of_text,
+                font,
+                font_scale,
+                font_color,
+                thickness,
+                line_type)
+
+    cv2.imshow("pred1", image)
