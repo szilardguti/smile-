@@ -27,7 +27,7 @@ def read_image_open(path: str, wait: bool = True) -> None:
         cv2.waitKey(0)
 
 
-def read_process_image(path: str, gray_scale: bool) -> Mat | ndarray | ndarray[Any, dtype[generic | generic]]:
+def read_process_image(path: str, gray_scale: bool):
     img = cv2.imread(path, cv2.IMREAD_COLOR)
     if gray_scale:
         img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
@@ -71,29 +71,16 @@ def show_example(data, labels, example_size=100, images_col_count=10, border_siz
     result = cv2.vconcat([row for row in row_images])
 
     plt.figure(figsize=(10, 10))
+    cv2.namedWindow("example", cv2.WINDOW_NORMAL)
 
     cv2.imshow('example', result)
 
 
 def show_with_prediction(image, percentage, prediction, real):
     # TODO: show image with text
-    font = cv2.FONT_HERSHEY_COMPLEX
-    bottom_left_corner_of_text = (32, 32)
-    font_scale = 1
-    font_color = (0, 0, 0)
-    thickness = 1
-    line_type = 1
+    image = image + 0.5
+    text = f'%: {percentage[0]:.3f}, {percentage[1]:.3f} | pred: {prediction:n} | real: {real:n}'
 
-    text = ('%: ' + str(percentage[0]) + ', ' + str(percentage[1])
-            + " pred: " + str(prediction) + " real: " + str(real)
-            )
+    cv2.namedWindow(text, cv2.WINDOW_NORMAL)
 
-    cv2.putText(image, text,
-                bottom_left_corner_of_text,
-                font,
-                font_scale,
-                font_color,
-                thickness,
-                line_type)
-
-    cv2.imshow("pred1", image)
+    cv2.imshow(text, image)

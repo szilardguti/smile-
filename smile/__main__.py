@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-
-import cv2
-import numpy as np
-
-from utils import dataLoader, modelTrainer, dataTransformer
-from utils.makeLabels import make_labels
-import utils.imageHandler as imageHandler
-from utils.listFiles import list_files
-
 import random
+
+import cv2
+
+import utils.imageHandler as imageHandler
+from utils import dataLoader, modelTrainer, dataTransformer
+from utils.listFiles import list_files
+from utils.makeLabels import make_labels
 
 
 def main():
@@ -45,7 +44,7 @@ def main():
     # model.save_weights('cnn.h5')
 
     print("\ncheck predictions...")
-    modelTrainer.checkPredicitons(model, test_data, test_labels)
+    modelTrainer.check_predictions(model, test_data, test_labels)
     print("prediction checking is done!")
 
     cv2.waitKey(0)

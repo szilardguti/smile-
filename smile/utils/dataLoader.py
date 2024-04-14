@@ -34,4 +34,4 @@ def load_data(smile_img, non_smile_img, positive_labels, negative_labels):
         test_data.append(non_smile_img[nsits])
         test_labels.append(negative_labels[nsits])
 
-    return (train_data, train_labels, test_data, test_labels)
+    return train_data, train_labels, test_data, test_labels

@@ -1,11 +1,13 @@
+import random
+
 import numpy as np
 from keras import Input
-from tensorflow import keras
-from keras.models import Sequential
 from keras.layers import Conv2D, MaxPooling2D, Dense, Flatten
+from keras.models import Sequential
 from keras.utils import to_categorical
 
-from utils import exampleHelper, imageHandler
+from smile.utils import exampleHelper
+from smile.utils import imageHandler
 
 
 # https://victorzhou.com/blog/keras-cnn-tutorial/
@@ -43,15 +45,15 @@ def train(model, train_data, train_labels, test_data, test_labels):
     )
 
 
-def checkPredicitons(model, test_data, test_labels):
-    _, _, indexes = exampleHelper.get_random_examples(test_data, test_labels, 25)
+def check_predictions(model, test_data, test_labels):
+    example_size = 25
+    indexes = random.sample(range(len(test_data)), example_size)
 
     predictions = model.predict(test_data[indexes])
     real_labels = [test_labels[idx] for idx in indexes]
 
-    # Print our model's predictions.
-    print(predictions)
-    # Check our predictions against the ground truths.
-    print(real_labels)  # [7, 2, 1, 0, 4]
-
-    imageHandler.show_with_prediction(test_data[0], predictions[0], np.argmax(predictions[0]), real_labels[0])
+    for i in range(example_size):
+        idx = indexes[i]
+        print(f'{i:n}: predicted: {np.argmax(predictions[i]):n} | real: {test_labels[i]:n}')
+        imageHandler.show_with_prediction(test_data[idx], predictions[i],
+                                          np.argmax(predictions[i]), real_labels[i])
