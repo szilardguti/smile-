@@ -28,6 +28,9 @@ def create_cnn_model(number_of_filters=8, filter_size=3, pooling_size=2):
         metrics=['accuracy'],
     )
 
+    print("Model is compiled: ")
+    model.summary()
+
     return model
 
 

@@ -2,10 +2,11 @@
 import random
 
 import cv2
+import keras
 from matplotlib import pyplot as plt
 
 import utils.imageHandler as imageHandler
-from smile.utils import graphHandler, fileHandler
+from smile.utils import graphHandler, fileHandler, cameraHandler
 from utils import dataLoader, modelTrainer, dataTransformer
 from utils.makeLabels import make_labels
 
@@ -40,7 +41,7 @@ def main():
 
     print("\nsave model...")
     path = fileHandler.make_save_directory(number_of_filters, filter_size, pooling_size, epoch_num, batch_size)
-    model.save_weights(path + '/cnn.h5')
+    model.save(path + '/cnn.keras')
     fileHandler.save_model_data(history, path)
     print("save model is done!")
 
@@ -62,7 +63,9 @@ def main():
 
 def camera():
     # TODO: run camera real time and predict smile
-    return None
+    model = keras.models.load_model('camera_model/cnn.keras')
+    model.summary()
+    cameraHandler.predict_live_cam(model)
 
 
 def list_param():

@@ -1,6 +1,7 @@
 import numpy as np
 
 
+# (batch_size, height, width, channels) - gray channel = 1
 def transform(data):
     np_data = np.array(list(x for x in data))
 
