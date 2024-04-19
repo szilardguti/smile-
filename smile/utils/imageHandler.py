@@ -27,12 +27,11 @@ def read_image_open(path: str, wait: bool = True) -> None:
         cv2.waitKey(0)
 
 
-def read_process_image(path: str, gray_scale: bool):
+def read_process_image(path: str):
     img = cv2.imread(path, cv2.IMREAD_COLOR)
-    if gray_scale:
-        img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
-    resized = cv2.resize(img, (32, 32), interpolation=cv2.INTER_AREA)
+    resized = cv2.resize(gray, (32, 32), interpolation=cv2.INTER_AREA)
     return resized
 
 
