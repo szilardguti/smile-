@@ -1,7 +1,6 @@
 import pathlib
 
 import cv2
-import numpy as np
 
 
 # https://www.youtube.com/watch?v=5cg_yggtkso
@@ -41,7 +40,7 @@ def predict_live_cam(model):
             # print(f'{predict[0][0]*100:.2f} | {predict[0][1]*100:.2f}')
 
             text = f'smile: {predict[0][1] * 100:.2f}%'
-            cv2.putText(frame, text, (x, y + 4), font, font_scale, color, thickness, cv2.LINE_AA)
+            cv2.putText(frame, text, (x, y - 5), font, font_scale, color, thickness, cv2.LINE_AA)
             cv2.rectangle(frame, (x, y), (x + width, y + height), color, 2)
 
         cv2.imshow("predicted face", frame)
