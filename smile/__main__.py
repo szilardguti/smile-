@@ -12,14 +12,6 @@ from utils.makeLabels import make_labels
 
 
 def main():
-    # hyperparameters
-    number_of_filters = 8
-    filter_size = 3
-    pooling_size = 2
-
-    epoch_num = 20
-    batch_size = 32
-
     print("retrieve and load images...")
     (smile_files, non_smile_files) = list_files()
     imageHandler.read_image_open(random.choice(smile_files), False)
@@ -68,5 +60,84 @@ def main():
     cv2.destroyAllWindows()
 
 
+def camera():
+    # TODO: run camera real time and guess faces
+    return None
+
+
+def list_param():
+    print("Hyperparams:")
+    print(f"Number of Filters: {number_of_filters}")
+    print(f"Filter Size: {filter_size}")
+    print(f"Pooling Size: {pooling_size}")
+    print(f"Epoch Number: {epoch_num}")
+    print(f"Batch Size: {batch_size}")
+
+
+def set_params():
+    print("Choose a property to set:")
+    print("1. Number of Filters")
+    print("2. Filter Size")
+    print("3. Pooling Size")
+    print("4. Epoch Number")
+    print("5. Batch Size")
+    print("6. Exit")
+
+    global number_of_filters
+    global filter_size
+    global pooling_size
+    global epoch_num
+    global batch_size
+
+    while True:
+        set_choice = input("Enter your choice: ")
+
+        if set_choice == '1':
+            number_of_filters = int(input("Enter the number of filters: "))
+            print(f"Number of Filters set to: {number_of_filters}")
+        elif set_choice == '2':
+            filter_size = int(input("Enter the filter size: "))
+            print(f"Filter Size set to: {filter_size}")
+        elif set_choice == '3':
+            pooling_size = int(input("Enter the pooling size: "))
+            print(f"Pooling Size set to: {pooling_size}")
+        elif set_choice == '4':
+            epoch_num = int(input("Enter the epoch number: "))
+            print(f"Epoch Number set to: {epoch_num}")
+        elif set_choice == '5':
+            batch_size = int(input("Enter the batch size: "))
+            print(f"Batch Size set to: {batch_size}")
+        elif set_choice == '6':
+            print("Exiting property setter...")
+            break
+        else:
+            print("Invalid choice. Please choose a number between 1 and 6.")
+
+
 if __name__ == '__main__':
-    main()
+    # hyperparameters
+    number_of_filters = 8
+    filter_size = 3
+    pooling_size = 2
+
+    epoch_num = 10
+    batch_size = 32
+
+    while True:
+        print("Enter 1 to run main(), 2 to run camera(), 3 to list hyperparams, 4 to set hyperparams, or 'q' to quit: ")
+        choice = input("Input: ")
+        print()
+        if choice == '1':
+            main()
+        elif choice == '2':
+            camera()
+        elif choice == '3':
+            list_param()
+        elif choice == '4':
+            set_params()
+        elif choice.lower() == 'q':
+            print("Exiting...")
+            break
+        else:
+            print("Invalid input. Please try again.")
+        print("\n")
