@@ -5,15 +5,14 @@ import cv2
 from matplotlib import pyplot as plt
 
 import utils.imageHandler as imageHandler
-from smile.utils import graphHandler
+from smile.utils import graphHandler, fileHandler
 from utils import dataLoader, modelTrainer, dataTransformer
-from utils.fileHandler import list_files, make_save_directory
 from utils.makeLabels import make_labels
 
 
 def main():
     print("retrieve and load images...")
-    (smile_files, non_smile_files) = list_files()
+    (smile_files, non_smile_files) = fileHandler.list_files()
     imageHandler.read_image_open(random.choice(smile_files), False)
 
     (positive_labels, negative_labels) = make_labels(smile_files, non_smile_files)
@@ -40,8 +39,9 @@ def main():
     print("model training is done!")
 
     print("\nsave model...")
-    path = make_save_directory(number_of_filters, filter_size, pooling_size, epoch_num, batch_size)
+    path = fileHandler.make_save_directory(number_of_filters, filter_size, pooling_size, epoch_num, batch_size)
     model.save_weights(path + '/cnn.h5')
+    fileHandler.save_model_data(history, path)
     print("save model is done!")
 
     print("\nshow graphs...")
@@ -61,7 +61,7 @@ def main():
 
 
 def camera():
-    # TODO: run camera real time and guess faces
+    # TODO: run camera real time and predict smile
     return None
 
 
@@ -120,7 +120,7 @@ if __name__ == '__main__':
     filter_size = 3
     pooling_size = 2
 
-    epoch_num = 10
+    epoch_num = 20
     batch_size = 32
 
     while True:

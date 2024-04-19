@@ -1,0 +1,11 @@
+last training data accuracy: 0.9216151833534241
+best training data accuracy: 0.9216151833534241 - index: 19
+
+last test data accuracy: 0.9252077341079712
+best test data accuracy: 0.9279778599739075 - index: 17
+
+last training data loss: 0.19294314086437225
+best training data loss: 0.19223065674304962 - index: 18
+
+last test data loss: 0.1861104965209961
+best test data loss: 0.1861104965209961 - index: 19
