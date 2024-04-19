@@ -2,6 +2,7 @@
 import random
 
 import cv2
+from matplotlib import pyplot as plt
 
 import utils.imageHandler as imageHandler
 from smile.utils import graphHandler
@@ -38,13 +39,16 @@ def main():
 
     print("\ntrain CNN model...")
     model = modelTrainer.create_cnn_model()
-    history = modelTrainer.train(model, train_data, train_labels, test_data, test_labels, 10)
+    history = modelTrainer.train(model, train_data, train_labels, test_data, test_labels, 10, 32)
     print("model training is done!")
 
     print("\nshow graphs...")
-    graphHandler.show(history, 'accuracy', 'val_accuracy', 'model accuracy', 'accuracy', 'epoch', ['train', 'test'])
-    graphHandler.show(history, 'loss', 'val_loss', 'model loss', 'loss', 'epoch', ['train', 'test'])
-    print("\nshow graphs is done...")
+    graphHandler.show(history, 'accuracy', 'val_accuracy', 'model accuracy', 'accuracy', 'epoch',
+                      ['train', 'test'], 1, './saves')
+    graphHandler.show(history, 'loss', 'val_loss', 'model loss', 'loss', 'epoch',
+                      ['train', 'test'], 2)
+    plt.show()
+    print("show graphs is done...")
 
     # save model
     # model.save_weights('cnn.h5')

@@ -11,16 +11,11 @@ from smile.utils import imageHandler
 
 
 # https://victorzhou.com/blog/keras-cnn-tutorial/
-def create_cnn_model():
-    # hyperparameters
-    number_of_filters = 8
-    filter_size = 3
-    pooling_size = 2
-
+def create_cnn_model(number_of_filters=8, filter_size=3, pooling_size=2):
     model = Sequential(
         [
             Input(shape=(32, 32, 1)),
-            Conv2D(number_of_filters, filter_size, ),
+            Conv2D(number_of_filters, filter_size),
             MaxPooling2D(pool_size=pooling_size),
             Flatten(),
             Dense(2, activation='softmax'),  # probability of the classification
@@ -36,13 +31,14 @@ def create_cnn_model():
     return model
 
 
-def train(model, train_data, train_labels, test_data, test_labels, epoch_num):
+def train(model, train_data, train_labels, test_data, test_labels, epoch_num, batch_size=32):
     return (
         model.fit(
             train_data,
             to_categorical(train_labels),
             epochs=epoch_num,
             validation_data=(test_data, to_categorical(test_labels)),
+            batch_size=batch_size,
         ))
 
 
