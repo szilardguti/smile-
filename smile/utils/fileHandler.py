@@ -11,9 +11,11 @@ def list_files():
 
 def make_save_directory(nof, fs, ps, en, bs):
     dir_name = ('nof-' + str(nof) + '__fs-' + str(fs)
-               + '__ps-' + str(ps) + '__en-' + str(en)
-               + '__bs-' + str(bs))
-    path = './saves/' + dir_name
-    os.mkdir(path)
+                + '__ps-' + str(ps) + '__en-' + str(en)
+                + '__bs-' + str(bs))
+    save_path = './saves/' + dir_name
+    
+    if not os.path.isdir(save_path):
+        os.mkdir(save_path)
 
-    return path
+    return save_path
