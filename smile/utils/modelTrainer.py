@@ -36,13 +36,14 @@ def create_cnn_model():
     return model
 
 
-def train(model, train_data, train_labels, test_data, test_labels):
-    model.fit(
-        train_data,
-        to_categorical(train_labels),
-        epochs=5,
-        validation_data=(test_data, to_categorical(test_labels)),
-    )
+def train(model, train_data, train_labels, test_data, test_labels, epoch_num):
+    return (
+        model.fit(
+            train_data,
+            to_categorical(train_labels),
+            epochs=epoch_num,
+            validation_data=(test_data, to_categorical(test_labels)),
+        ))
 
 
 def check_predictions(model, test_data, test_labels):
@@ -52,8 +53,16 @@ def check_predictions(model, test_data, test_labels):
     predictions = model.predict(test_data[indexes])
     real_labels = [test_labels[idx] for idx in indexes]
 
+    incorrect = 0
+
     for i in range(example_size):
         idx = indexes[i]
-        print(f'{i:n}: predicted: {np.argmax(predictions[i]):n} | real: {test_labels[i]:n}')
+        pred = np.argmax(predictions[i])
+        real = real_labels[i]
+        print(f'{i:n}: predicted: {pred:n} | real: {real:n}')
         imageHandler.show_with_prediction(test_data[idx], predictions[i],
-                                          np.argmax(predictions[i]), real_labels[i])
+                                          pred, real)
+        if pred != real:
+            incorrect += 1
+
+    print(f'incorrect predictions: {incorrect:n}/{example_size:n}')

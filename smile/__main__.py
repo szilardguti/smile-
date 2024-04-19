@@ -4,6 +4,7 @@ import random
 import cv2
 
 import utils.imageHandler as imageHandler
+from smile.utils import graphHandler
 from utils import dataLoader, modelTrainer, dataTransformer
 from utils.listFiles import list_files
 from utils.makeLabels import make_labels
@@ -37,8 +38,13 @@ def main():
 
     print("\ntrain CNN model...")
     model = modelTrainer.create_cnn_model()
-    modelTrainer.train(model, train_data, train_labels, test_data, test_labels)
+    history = modelTrainer.train(model, train_data, train_labels, test_data, test_labels, 10)
     print("model training is done!")
+
+    print("\nshow graphs...")
+    graphHandler.show(history, 'accuracy', 'val_accuracy', 'model accuracy', 'accuracy', 'epoch', ['train', 'test'])
+    graphHandler.show(history, 'loss', 'val_loss', 'model loss', 'loss', 'epoch', ['train', 'test'])
+    print("\nshow graphs is done...")
 
     # save model
     # model.save_weights('cnn.h5')
