@@ -1,13 +1,9 @@
 import math
-import random
-from typing import Any
 
 import cv2
 import matplotlib.pyplot as plt
-from cv2 import Mat
-from numpy import ndarray, dtype, generic
 
-from utils import exampleHelper
+from smile.utils import exampleHelper
 
 
 # images from: https://www.kaggle.com/datasets/chazzer/smiling-or-not-face-data/data
