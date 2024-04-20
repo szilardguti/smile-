@@ -43,20 +43,34 @@ def main():
     path = fileHandler.make_save_directory(number_of_filters, filter_size, pooling_size, epoch_num, batch_size)
     model.save(path + '/cnn.keras')
     fileHandler.save_model_data(history, path)
+    save_input = input('Use this model for the camera? (y/n): ')
+    if save_input == 'y':
+        model.save('./camera_model/cnn.keras', overwrite=True)
+        print("This model is now used for camera()")
+
+    print(f'Model is saved to folder: {path}')
     print("save model is done!")
+
+    print("\nshow filters...")
+    # TODO: show convolutional filters
+    graphHandler.show_filters(model)
+    cv2.waitKey(0)
+
+    print("show filters is done!")
 
     print("\nshow graphs...")
     graphHandler.show(history, 'accuracy', 'val_accuracy', 'model accuracy', 'accuracy', 'epoch',
                       ['train', 'test'], 1, save_path=path)
     graphHandler.show(history, 'loss', 'val_loss', 'model loss', 'loss', 'epoch',
                       ['train', 'test'], 2, save_path=path)
-    plt.show()
     print("show graphs is done...")
 
     print("\ncheck predictions...")
     modelTrainer.check_predictions(model, test_data, test_labels)
     print("prediction checking is done!")
 
+    plt.show()
+    plt.pause(0.01)
     cv2.waitKey(0)
     cv2.destroyAllWindows()
 
@@ -93,7 +107,7 @@ def set_params():
     global batch_size
 
     while True:
-        set_choice = input("Enter your choice: ")
+        set_choice = input("\nEnter your choice (6 to quit): ")
 
         if set_choice == '1':
             number_of_filters = int(input("Enter the number of filters: "))
