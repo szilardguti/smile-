@@ -26,13 +26,13 @@ def main():
 
     print("image loading is done!")
     imageHandler.show_example(train_data, train_labels)
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
 
     print("\ntransform data...")
     train_data = dataTransformer.transform(train_data)
     test_data = dataTransformer.transform(test_data)
     print("transforming data is done!")
-
-    # TODO: hyperparameter loop + graphs
 
     print("\ntrain CNN model...")
     model = modelTrainer.create_cnn_model(number_of_filters, filter_size, pooling_size)
@@ -52,25 +52,22 @@ def main():
     print("save model is done!")
 
     print("\nshow filters...")
-    # TODO: show convolutional filters
     graphHandler.show_filters(model)
-    cv2.waitKey(0)
-
     print("show filters is done!")
+    cv2.waitKey(0)
+    cv2.destroyAllWindows()
 
     print("\nshow graphs...")
     graphHandler.show(history, 'accuracy', 'val_accuracy', 'model accuracy', 'accuracy', 'epoch',
                       ['train', 'test'], 1, save_path=path)
     graphHandler.show(history, 'loss', 'val_loss', 'model loss', 'loss', 'epoch',
                       ['train', 'test'], 2, save_path=path)
+    plt.show()
     print("show graphs is done...")
 
     print("\ncheck predictions...")
     modelTrainer.check_predictions(model, test_data, test_labels)
     print("prediction checking is done!")
-
-    plt.show()
-    plt.pause(0.01)
     cv2.waitKey(0)
     cv2.destroyAllWindows()
 

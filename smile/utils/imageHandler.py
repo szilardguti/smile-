@@ -77,7 +77,7 @@ def show_example(data, labels, example_size=100, images_col_count=10, border_siz
 
 def show_with_prediction(image, percentage, prediction, real):
     image = image + 0.5
-    text = f'%: {percentage[0]:.3f}, {percentage[1]:.3f} | pred: {prediction:n} | real: {real:n}'
+    text = f'%: {percentage[0]*100:.3f}, {percentage[1]*100:.3f} | pred: {prediction:n} | real: {real:n}'
 
     cv2.namedWindow(text, cv2.WINDOW_NORMAL)
     cv2.imshow(text, image)
